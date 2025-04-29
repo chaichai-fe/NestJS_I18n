@@ -2,14 +2,22 @@ import { Injectable } from '@nestjs/common';
 import db from '../db';
 import { langTagTable } from '../db/schema';
 import type CreateLangTagDto from './dto/create-langTag.dto';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class LangTagService {
-  create(createLangTagDto: CreateLangTagDto) {
-    return db.insert(langTagTable).values(createLangTagDto);
+  async create(createLangTagDto: CreateLangTagDto) {
+    return await db.insert(langTagTable).values(createLangTagDto).returning();
   }
 
-  findAll() {
-    return db.select().from(langTagTable);
+  async findAll() {
+    return await db.select().from(langTagTable);
+  }
+
+  async remove(id: number) {
+    return await db
+      .delete(langTagTable)
+      .where(eq(langTagTable.id, id))
+      .returning();
   }
 }
