@@ -1,9 +1,8 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { LangModule } from './lang/lang.module';
 import { LangTagModule } from './langTags/langTag.module';
 
 @Module({
-  imports: [LangModule, LangTagModule],
+  imports: [LangTagModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
