@@ -20,4 +20,12 @@ export class LangTagService {
       .where(eq(langTagTable.id, id))
       .returning();
   }
+
+  async update(id: number, updateLangTagDto: CreateLangTagDto) {
+    return await db
+      .update(langTagTable)
+      .set(updateLangTagDto)
+      .where(eq(langTagTable.id, id))
+      .returning();
+  }
 }

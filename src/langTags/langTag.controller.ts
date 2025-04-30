@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Delete,
   Param,
+  Put,
 } from '@nestjs/common';
 import { LangTagService } from './langTag.service';
 import CreateLangTagDto from './dto/create-langTag.dto';
@@ -58,5 +59,18 @@ export class LangTagController {
         error,
       };
     }
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateLangTagDto: CreateLangTagDto,
+  ) {
+    const result = await this.langTagService.update(+id, updateLangTagDto);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'update success',
+      result,
+    };
   }
 }
