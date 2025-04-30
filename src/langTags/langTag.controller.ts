@@ -15,8 +15,13 @@ export class LangTagController {
   constructor(private readonly langTagService: LangTagService) {}
 
   @Get()
-  findAll() {
-    return this.langTagService.findAll();
+  async findAll() {
+    const result = await this.langTagService.findAll();
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'find all success',
+      result,
+    };
   }
 
   @Post()
