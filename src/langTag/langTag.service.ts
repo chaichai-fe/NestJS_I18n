@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import db from '../db';
 import { langTagTable } from '../db/schema';
 import type CreateLangTagDto from './dto/create-langTag.dto';
-import { eq } from 'drizzle-orm';
-
+import { eq, sql } from 'drizzle-orm';
 @Injectable()
 export class LangTagService {
   async create(createLangTagDto: CreateLangTagDto) {
@@ -24,7 +23,10 @@ export class LangTagService {
   async update(id: number, updateLangTagDto: CreateLangTagDto) {
     return await db
       .update(langTagTable)
-      .set(updateLangTagDto)
+      .set({
+        ...updateLangTagDto,
+        updatedAt: sql`NOW()`,
+      })
       .where(eq(langTagTable.id, id))
       .returning();
   }

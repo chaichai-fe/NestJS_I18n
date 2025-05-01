@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import CreateBusinessTagDto from './dto/create-business.dto';
+import CreateBusinessTagDto from './dto/create-businessTag.dto';
 import { businessTagTable } from '../db/schema';
 import db from '../db';
 import { eq } from 'drizzle-orm';

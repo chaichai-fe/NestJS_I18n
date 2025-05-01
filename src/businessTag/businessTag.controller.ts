@@ -6,12 +6,12 @@ import {
   HttpStatus,
   Param,
 } from '@nestjs/common';
-import { BusinessTagService } from './business.service';
-import CreateBusinessTagDto from './dto/create-business.dto';
+import { BusinessTagService } from './businessTag.service';
+import CreateBusinessTagDto from './dto/create-businessTag.dto';
 import { Body } from '@nestjs/common';
 
 @Controller('business_tag')
-export class BusinessController {
+export class BusinessTagController {
   constructor(private readonly businessService: BusinessTagService) {}
 
   @Get()
