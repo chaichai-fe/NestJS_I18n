@@ -5,6 +5,7 @@ import {
   Delete,
   HttpStatus,
   Param,
+  Put,
 } from '@nestjs/common';
 import { BusinessTagService } from './businessTag.service';
 import CreateBusinessTagDto from './dto/create-businessTag.dto';
@@ -40,6 +41,19 @@ export class BusinessTagController {
     return {
       statusCode: HttpStatus.OK,
       message: 'delete success',
+      result,
+    };
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateBusinessTagDto: CreateBusinessTagDto,
+  ) {
+    const result = await this.businessService.update(+id, updateBusinessTagDto);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'update success',
       result,
     };
   }
