@@ -57,4 +57,14 @@ export class BusinessTagController {
       result,
     };
   }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const result = await this.businessService.findById(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'find by id success',
+      result,
+    };
+  }
 }

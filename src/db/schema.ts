@@ -41,6 +41,8 @@ export type TranslationContent = {
 
 export const translationTable = pgTable('translation', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }).notNull(),
   business_tag_id: integer()
     .notNull()
     .references(() => businessTagTable.id),

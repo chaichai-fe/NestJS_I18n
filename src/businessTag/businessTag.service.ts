@@ -33,4 +33,11 @@ export class BusinessTagService {
       .where(eq(businessTagTable.id, id))
       .returning();
   }
+
+  async findById(id: number) {
+    return await db
+      .select()
+      .from(businessTagTable)
+      .where(eq(businessTagTable.id, id));
+  }
 }

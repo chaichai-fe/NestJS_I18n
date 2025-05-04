@@ -5,6 +5,7 @@ import {
   Delete,
   HttpStatus,
   Param,
+  Put,
 } from '@nestjs/common';
 import { TranslationsService } from './translations.service';
 import CreateTranslationDto from './dto/create-translation.dto';
@@ -40,6 +41,32 @@ export class TranslationsController {
     return {
       statusCode: HttpStatus.OK,
       message: 'delete success',
+      result,
+    };
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateTranslationDto: CreateTranslationDto,
+  ) {
+    const result = await this.translationsService.update(
+      +id,
+      updateTranslationDto,
+    );
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'update success',
+      result,
+    };
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const result = await this.translationsService.findById(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'find by id success',
       result,
     };
   }
