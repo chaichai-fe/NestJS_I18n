@@ -6,10 +6,12 @@ import {
   HttpStatus,
   Param,
   Put,
+  Res,
 } from '@nestjs/common';
 import { TranslationsService } from './translations.service';
 import CreateTranslationDto from './dto/create-translation.dto';
 import { Body } from '@nestjs/common';
+import { Response } from 'express';
 
 @Controller('translations')
 export class TranslationsController {
@@ -69,5 +71,16 @@ export class TranslationsController {
       message: 'find by id success',
       result,
     };
+  }
+
+  @Get('export/json')
+  async downloadTranslationsAsJson(@Res() res: Response) {
+    const translations = await this.translationsService.getTranslationsAsJson();
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=translations.json',
+    );
+
+    return res.send(translations);
   }
 }

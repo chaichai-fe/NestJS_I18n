@@ -37,4 +37,13 @@ export class TranslationsService {
       .from(translationTable)
       .where(eq(translationTable.id, id));
   }
+
+  async getTranslationsAsJson() {
+    const translations = await db
+      .select({
+        translations: translationTable.translations,
+      })
+      .from(translationTable);
+    return translations;
+  }
 }
