@@ -30,4 +30,8 @@ export class LangTagService {
       .where(eq(langTagTable.id, id))
       .returning();
   }
+
+  async findById(id: number) {
+    return await db.select().from(langTagTable).where(eq(langTagTable.id, id));
+  }
 }

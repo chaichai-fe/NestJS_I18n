@@ -73,4 +73,14 @@ export class LangTagController {
       result,
     };
   }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const result = await this.langTagService.findById(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'find by id success',
+      result,
+    };
+  }
 }
