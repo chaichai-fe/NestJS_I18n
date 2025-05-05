@@ -3,16 +3,16 @@ import {
   UnauthorizedException,
   ConflictException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import db from '../db';
 import { userTable } from '../db/schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { eq } from 'drizzle-orm';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class UserService {
+export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async register(createUserDto: CreateUserDto) {
@@ -39,7 +39,13 @@ export class UserService {
       .returning();
 
     // Generate JWT token
-    const token = this.jwtService.sign({ userId: user.id });
+    const token = this.jwtService.sign(
+      { userId: user.id },
+      {
+        secret: process.env.JWT_SECRET,
+        expiresIn: '1d',
+      },
+    );
 
     return {
       user: {
@@ -73,7 +79,13 @@ export class UserService {
     }
 
     // Generate JWT token
-    const token = this.jwtService.sign({ userId: user.id });
+    const token = this.jwtService.sign(
+      { userId: user.id },
+      {
+        secret: process.env.JWT_SECRET,
+        expiresIn: '1d',
+      },
+    );
 
     return {
       user: {

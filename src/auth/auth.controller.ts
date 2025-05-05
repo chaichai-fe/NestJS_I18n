@@ -1,15 +1,15 @@
 import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
-import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 
-@Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    const result = await this.userService.register(createUserDto);
+    const result = await this.authService.register(createUserDto);
     return {
       statusCode: HttpStatus.CREATED,
       message: 'Registration successful',
@@ -19,7 +19,7 @@ export class UserController {
 
   @Post('login')
   async login(@Body() loginDto: LoginUserDto) {
-    const result = await this.userService.login(loginDto);
+    const result = await this.authService.login(loginDto);
     return {
       statusCode: HttpStatus.OK,
       message: 'Login successful',

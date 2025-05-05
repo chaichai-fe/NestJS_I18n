@@ -7,16 +7,18 @@ import {
   Param,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { TranslationsService } from './translations.service';
 import CreateTranslationDto from './dto/create-translation.dto';
 import { Body } from '@nestjs/common';
 import { Response } from 'express';
-
+import { AuthGuard } from 'src/auth/auth.guard';
 @Controller('translations')
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll() {
     const result = await this.translationsService.findAll();
