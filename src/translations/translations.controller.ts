@@ -14,11 +14,11 @@ import CreateTranslationDto from './dto/create-translation.dto';
 import { Body } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
+
 @Controller('translations')
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}
 
-  @UseGuards(AuthGuard)
   @Get()
   async findAll() {
     const result = await this.translationsService.findAll();
@@ -29,6 +29,7 @@ export class TranslationsController {
     };
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createTranslationDto: CreateTranslationDto) {
     const result = await this.translationsService.create(createTranslationDto);
@@ -39,6 +40,7 @@ export class TranslationsController {
     };
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const result = await this.translationsService.remove(+id);
@@ -49,6 +51,7 @@ export class TranslationsController {
     };
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -75,6 +78,7 @@ export class TranslationsController {
     };
   }
 
+  @UseGuards(AuthGuard)
   @Get('export/json')
   async downloadTranslationsAsJson(@Res() res: Response) {
     const translations = await this.translationsService.getTranslationsAsJson();
