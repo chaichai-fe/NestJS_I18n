@@ -8,18 +8,20 @@ import {
   Param,
   Put,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { LangTagService } from './langTag.service';
 import CreateLangTagDto from './dto/create-langTag.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Controller('lang_tag')
 export class LangTagController {
   constructor(private readonly langTagService: LangTagService) {}
 
   @Get()
-  async findAll() {
-    const result = await this.langTagService.findAll();
+  async findAll(@Query() paginationDto: PaginationDto) {
+    const result = await this.langTagService.findAll(paginationDto);
     return {
       statusCode: HttpStatus.OK,
       message: 'find all success',
