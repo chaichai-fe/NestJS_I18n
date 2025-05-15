@@ -2,14 +2,14 @@ import {
   Injectable,
   UnauthorizedException,
   ConflictException,
-} from '@nestjs/common';
-import db from '../db';
-import { userTable } from '../db/schema';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
-import { eq } from 'drizzle-orm';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+} from '@nestjs/common'
+import db from '../db'
+import { userTable } from '../db/schema'
+import { CreateUserDto } from './dto/create-user.dto'
+import { LoginUserDto } from './dto/login-user.dto'
+import { eq } from 'drizzle-orm'
+import { JwtService } from '@nestjs/jwt'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -20,14 +20,14 @@ export class AuthService {
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.email, createUserDto.email));
+      .where(eq(userTable.email, createUserDto.email))
 
     if (existingUser.length > 0) {
-      throw new ConflictException('User already exists');
+      throw new ConflictException('User already exists')
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
 
     // Create user
     const [user] = await db
@@ -36,7 +36,7 @@ export class AuthService {
         ...createUserDto,
         password: hashedPassword,
       })
-      .returning();
+      .returning()
 
     // Generate JWT token
     const token = this.jwtService.sign(
@@ -45,7 +45,7 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
         expiresIn: '1d',
       },
-    );
+    )
 
     return {
       user: {
@@ -54,7 +54,7 @@ export class AuthService {
         email: user.email,
       },
       token,
-    };
+    }
   }
 
   async login(loginDto: LoginUserDto) {
@@ -62,20 +62,20 @@ export class AuthService {
     const [user] = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.email, loginDto.email));
+      .where(eq(userTable.email, loginDto.email))
 
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid credentials')
     }
 
     // Verify password
     const isPasswordValid = await bcrypt.compare(
       loginDto.password,
       user.password,
-    );
+    )
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid credentials')
     }
 
     // Generate JWT token
@@ -85,7 +85,7 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
         expiresIn: '1d',
       },
-    );
+    )
 
     return {
       user: {
@@ -94,6 +94,6 @@ export class AuthService {
         email: user.email,
       },
       token,
-    };
+    }
   }
 }

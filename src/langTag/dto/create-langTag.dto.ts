@@ -1,13 +1,13 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator'
 
 class CreateLangTagDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name: string
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description: string
 }
 
-export default CreateLangTagDto;
+export default CreateLangTagDto

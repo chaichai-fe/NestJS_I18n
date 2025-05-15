@@ -1,21 +1,21 @@
-import { TranslationContent } from '../../db/schema';
-import { IsNotEmpty, IsString, IsNumber, IsObject } from 'class-validator';
+import { TranslationContent } from '../../db/schema'
+import { IsNotEmpty, IsString, IsNumber, IsObject } from 'class-validator'
 class CreateTranslationDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  name: string
 
   @IsNotEmpty()
   @IsString()
-  description: string;
+  description: string
 
   @IsNotEmpty()
   @IsNumber()
-  business_tag_id: number;
+  business_tag_id: number
 
   @IsNotEmpty()
   @IsObject()
-  translations: TranslationContent;
+  translations: TranslationContent
 }
 
-export default CreateTranslationDto;
+export default CreateTranslationDto

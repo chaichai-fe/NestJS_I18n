@@ -4,7 +4,7 @@ import {
   varchar,
   timestamp,
   jsonb,
-} from 'drizzle-orm/pg-core';
+} from 'drizzle-orm/pg-core'
 
 export const businessTagTable = pgTable('business_tags', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -12,7 +12,7 @@ export const businessTagTable = pgTable('business_tags', {
   description: varchar({ length: 255 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
+})
 
 export const langTagTable = pgTable('lang_tags', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -20,7 +20,7 @@ export const langTagTable = pgTable('lang_tags', {
   description: varchar({ length: 255 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
+})
 
 /**
  * id:1001,
@@ -35,9 +35,9 @@ export const langTagTable = pgTable('lang_tags', {
 
 export type TranslationContent = {
   [key: string]: {
-    [langTagName: string]: string;
-  };
-};
+    [langTagName: string]: string
+  }
+}
 
 export const translationTable = pgTable('translation', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -47,11 +47,11 @@ export const translationTable = pgTable('translation', {
     .notNull()
     .references(() => businessTagTable.id),
   translations: jsonb('translations').$type<TranslationContent>().notNull(),
-});
+})
 
 export const userTable = pgTable('users', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull(),
   password: varchar({ length: 255 }).notNull(),
-});
+})

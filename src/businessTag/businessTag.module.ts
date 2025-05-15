@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { BusinessTagController } from './businessTag.controller';
-import { BusinessTagService } from './businessTag.service';
+import { Module } from '@nestjs/common'
+import { BusinessTagController } from './businessTag.controller'
+import { BusinessTagService } from './businessTag.service'
 
 @Module({
   controllers: [BusinessTagController],

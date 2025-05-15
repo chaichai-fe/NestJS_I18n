@@ -8,12 +8,12 @@ import {
   Put,
   Res,
   UseGuards,
-} from '@nestjs/common';
-import { TranslationsService } from './translations.service';
-import CreateTranslationDto from './dto/create-translation.dto';
-import { Body } from '@nestjs/common';
-import { Response } from 'express';
-import { AuthGuard } from 'src/auth/auth.guard';
+} from '@nestjs/common'
+import { TranslationsService } from './translations.service'
+import CreateTranslationDto from './dto/create-translation.dto'
+import { Body } from '@nestjs/common'
+import { Response } from 'express'
+import { AuthGuard } from 'src/auth/auth.guard'
 
 @Controller('translations')
 export class TranslationsController {
@@ -21,34 +21,34 @@ export class TranslationsController {
 
   @Get()
   async findAll() {
-    const result = await this.translationsService.findAll();
+    const result = await this.translationsService.findAll()
     return {
       statusCode: HttpStatus.OK,
       message: 'find all success',
       result,
-    };
+    }
   }
 
   @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createTranslationDto: CreateTranslationDto) {
-    const result = await this.translationsService.create(createTranslationDto);
+    const result = await this.translationsService.create(createTranslationDto)
     return {
       statusCode: HttpStatus.CREATED,
       message: 'create success',
       result,
-    };
+    }
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    const result = await this.translationsService.remove(+id);
+    const result = await this.translationsService.remove(+id)
     return {
       statusCode: HttpStatus.OK,
       message: 'delete success',
       result,
-    };
+    }
   }
 
   @UseGuards(AuthGuard)
@@ -60,33 +60,33 @@ export class TranslationsController {
     const result = await this.translationsService.update(
       +id,
       updateTranslationDto,
-    );
+    )
     return {
       statusCode: HttpStatus.OK,
       message: 'update success',
       result,
-    };
+    }
   }
 
   @Get(':id')
   async findById(@Param('id') id: string) {
-    const result = await this.translationsService.findById(+id);
+    const result = await this.translationsService.findById(+id)
     return {
       statusCode: HttpStatus.OK,
       message: 'find by id success',
       result,
-    };
+    }
   }
 
   @UseGuards(AuthGuard)
   @Get('export/json')
   async downloadTranslationsAsJson(@Res() res: Response) {
-    const translations = await this.translationsService.getTranslationsAsJson();
+    const translations = await this.translationsService.getTranslationsAsJson()
     res.setHeader(
       'Content-Disposition',
       'attachment; filename=translations.json',
-    );
+    )
 
-    return res.send(translations);
+    return res.send(translations)
   }
 }

@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { translationTable } from '../db/schema';
-import db from '../db';
-import { eq } from 'drizzle-orm';
-import CreateTranslationDto from './dto/create-translation.dto';
+import { Injectable } from '@nestjs/common'
+import { translationTable } from '../db/schema'
+import db from '../db'
+import { eq } from 'drizzle-orm'
+import CreateTranslationDto from './dto/create-translation.dto'
 @Injectable()
 export class TranslationsService {
   async create(createTranslationDto: CreateTranslationDto) {
     return await db
       .insert(translationTable)
       .values(createTranslationDto)
-      .returning();
+      .returning()
   }
 
   async findAll() {
-    return await db.select().from(translationTable);
+    return await db.select().from(translationTable)
   }
 
   async remove(id: number) {
     return await db
       .delete(translationTable)
       .where(eq(translationTable.id, id))
-      .returning();
+      .returning()
   }
 
   async update(id: number, updateTranslationDto: CreateTranslationDto) {
@@ -28,14 +28,14 @@ export class TranslationsService {
       .update(translationTable)
       .set(updateTranslationDto)
       .where(eq(translationTable.id, id))
-      .returning();
+      .returning()
   }
 
   async findById(id: number) {
     return await db
       .select()
       .from(translationTable)
-      .where(eq(translationTable.id, id));
+      .where(eq(translationTable.id, id))
   }
 
   async getTranslationsAsJson() {
@@ -43,7 +43,7 @@ export class TranslationsService {
       .select({
         translations: translationTable.translations,
       })
-      .from(translationTable);
-    return translations;
+      .from(translationTable)
+    return translations
   }
 }

@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import CreateBusinessTagDto from './dto/create-businessTag.dto';
-import { businessTagTable } from '../db/schema';
-import db from '../db';
-import { eq, sql } from 'drizzle-orm';
+import { Injectable } from '@nestjs/common'
+import CreateBusinessTagDto from './dto/create-businessTag.dto'
+import { businessTagTable } from '../db/schema'
+import db from '../db'
+import { eq, sql } from 'drizzle-orm'
 @Injectable()
 export class BusinessTagService {
   async create(createBusinessTagDto: CreateBusinessTagDto) {
     return await db
       .insert(businessTagTable)
       .values(createBusinessTagDto)
-      .returning();
+      .returning()
   }
 
   async findAll() {
-    return await db.select().from(businessTagTable);
+    return await db.select().from(businessTagTable)
   }
 
   async remove(id: number) {
     return await db
       .delete(businessTagTable)
       .where(eq(businessTagTable.id, id))
-      .returning();
+      .returning()
   }
 
   async update(id: number, updateBusinessTagDto: CreateBusinessTagDto) {
@@ -31,13 +31,13 @@ export class BusinessTagService {
         updatedAt: sql`NOW()`,
       })
       .where(eq(businessTagTable.id, id))
-      .returning();
+      .returning()
   }
 
   async findById(id: number) {
     return await db
       .select()
       .from(businessTagTable)
-      .where(eq(businessTagTable.id, id));
+      .where(eq(businessTagTable.id, id))
   }
 }
