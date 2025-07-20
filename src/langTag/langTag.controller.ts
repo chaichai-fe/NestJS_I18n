@@ -7,12 +7,10 @@ import {
   Delete,
   Param,
   Put,
-  UseGuards,
   Query,
 } from '@nestjs/common'
 import { LangTagService } from './langTag.service'
 import CreateLangTagDto from './dto/create-langTag.dto'
-import { AuthGuard } from 'src/auth/auth.guard'
 import { PaginationDto } from './dto/pagination.dto'
 
 @Controller('lang_tag')
@@ -29,7 +27,6 @@ export class LangTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createLangTagDto: CreateLangTagDto) {
     const result = await this.langTagService.create(createLangTagDto)
@@ -40,7 +37,6 @@ export class LangTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const result = await this.langTagService.remove(+id)
@@ -51,7 +47,6 @@ export class LangTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,

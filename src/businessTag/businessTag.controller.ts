@@ -6,12 +6,10 @@ import {
   HttpStatus,
   Param,
   Put,
-  UseGuards,
 } from '@nestjs/common'
 import { BusinessTagService } from './businessTag.service'
 import CreateBusinessTagDto from './dto/create-businessTag.dto'
 import { Body } from '@nestjs/common'
-import { AuthGuard } from 'src/auth/auth.guard'
 
 @Controller('business_tag')
 export class BusinessTagController {
@@ -27,7 +25,6 @@ export class BusinessTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createBusinessTagDto: CreateBusinessTagDto) {
     const result = await this.businessService.create(createBusinessTagDto)
@@ -38,7 +35,6 @@ export class BusinessTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const result = await this.businessService.remove(+id)
@@ -49,7 +45,6 @@ export class BusinessTagController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,

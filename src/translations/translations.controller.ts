@@ -29,7 +29,6 @@ export class TranslationsController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createTranslationDto: CreateTranslationDto) {
     const result = await this.translationsService.create(createTranslationDto)
@@ -40,7 +39,6 @@ export class TranslationsController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const result = await this.translationsService.remove(+id)
@@ -51,7 +49,6 @@ export class TranslationsController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
