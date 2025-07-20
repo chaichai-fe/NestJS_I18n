@@ -16,10 +16,10 @@ async function bootstrap() {
   })
   // 设置Swagger
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Translation API')
+    .setDescription('Translation API description')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('translations')
     .build()
   const documentFactory = () => SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('swagger', app, documentFactory)
