@@ -21,6 +21,7 @@
   "include": [
     "src/**/*",
     "ecosystem.config.js",
-    "drizzle.config.ts"
+    "drizzle.config.ts",
+    "src/db"
   ]
 }
