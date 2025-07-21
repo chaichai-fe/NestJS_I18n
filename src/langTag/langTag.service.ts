@@ -12,7 +12,9 @@ export class LangTagService {
   }
 
   async findAll(paginationDto: PaginationDto) {
-    const { page = 1, pageSize = 10 } = paginationDto
+    // 兜底转换为数字
+    const page = Number(paginationDto.page)
+    const pageSize = Number(paginationDto.pageSize)
     const offset = (page - 1) * pageSize
 
     const [data, total] = await Promise.all([

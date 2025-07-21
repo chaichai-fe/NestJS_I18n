@@ -1,31 +1,16 @@
-import { IsNumber, IsOptional, Min } from 'class-validator'
+import { IsOptional, Min, IsInt } from 'class-validator'
 import { Type } from 'class-transformer'
-import { ApiProperty } from '@nestjs/swagger'
 
 export class PaginationDto {
-  @ApiProperty({
-    description: '页码',
-    example: 1,
-    required: false,
-    minimum: 1,
-    default: 1,
-  })
   @IsOptional()
   @Type(() => Number)
-  @IsNumber()
-  @Min(1)
-  page?: number = 1
+  @IsInt({ message: 'page must be an integer' })
+  @Min(1, { message: 'page must be greater than 0' })
+  page: number = 1
 
-  @ApiProperty({
-    description: '每页数量',
-    example: 10,
-    required: false,
-    minimum: 1,
-    default: 10,
-  })
   @IsOptional()
   @Type(() => Number)
-  @IsNumber()
-  @Min(1)
-  pageSize?: number = 10
+  @IsInt({ message: 'pageSize must be an integer' })
+  @Min(1, { message: 'pageSize must be greater than 0' })
+  pageSize: number = 10
 }
