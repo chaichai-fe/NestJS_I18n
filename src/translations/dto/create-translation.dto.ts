@@ -1,5 +1,6 @@
 import { TranslationContent } from '../../db/schema'
 import { IsNotEmpty, IsString, IsNumber, IsObject } from 'class-validator'
+
 class CreateTranslationDto {
   @IsNotEmpty()
   @IsString()
