@@ -14,6 +14,7 @@ import CreateTranslationDto from './dto/create-translation.dto'
 import { Body } from '@nestjs/common'
 import { Response } from 'express'
 import { AuthGuard } from 'src/auth/auth.guard'
+import { ApiBearerAuth } from '@nestjs/swagger'
 
 @Controller('translations')
 export class TranslationsController {
@@ -76,6 +77,7 @@ export class TranslationsController {
   }
 
   @UseGuards(AuthGuard)
+  @ApiBearerAuth('access-token')
   @Get('export/json')
   async downloadTranslationsAsJson(@Res() res: Response) {
     const translations = await this.translationsService.getTranslationsAsJson()

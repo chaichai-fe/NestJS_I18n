@@ -24,6 +24,17 @@ async function bootstrap() {
     .setDescription('Translation API description')
     .setVersion('1.0')
     .addTag('translations')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        description: 'JWT Token, format: Bearer <token>',
+        in: 'header',
+      },
+      'access-token',
+    )
     .build()
   const documentFactory = () => SwaggerModule.createDocument(app, config)
   const theme = new SwaggerTheme()
