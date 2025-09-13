@@ -6,18 +6,20 @@ import {
   HttpStatus,
   Param,
   Put,
+  Query,
 } from '@nestjs/common'
 import { BusinessTagService } from './businessTag.service'
 import CreateBusinessTagDto from './dto/create-businessTag.dto'
 import { Body } from '@nestjs/common'
+import { PaginationDto } from '../common/dto/pagination.dto'
 
 @Controller('business_tag')
 export class BusinessTagController {
   constructor(private readonly businessService: BusinessTagService) {}
 
   @Get()
-  async findAll() {
-    const result = await this.businessService.findAll()
+  async findAll(@Query() paginationDto: PaginationDto) {
+    const result = await this.businessService.findAll(paginationDto)
     return {
       statusCode: HttpStatus.OK,
       message: 'find all success',

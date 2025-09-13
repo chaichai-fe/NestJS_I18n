@@ -1,12 +1,12 @@
 {
   "version": "7",
-  "dialect": "postgresql",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1753088009300,
-      "tag": "0000_flat_mariko_yashida",
+      "version": "5",
+      "when": 1757765558709,
+      "tag": "0000_futuristic_true_believers",
       "breakpoints": true
     }
   ]

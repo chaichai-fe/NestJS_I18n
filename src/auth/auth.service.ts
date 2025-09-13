@@ -30,13 +30,17 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
 
     // Create user
+    await db.insert(userTable).values({
+      ...createUserDto,
+      password: hashedPassword,
+    })
+
+    // MySQL doesn't support returning, so we need to query the inserted record
     const [user] = await db
-      .insert(userTable)
-      .values({
-        ...createUserDto,
-        password: hashedPassword,
-      })
-      .returning()
+      .select()
+      .from(userTable)
+      .where(eq(userTable.email, createUserDto.email))
+      .limit(1)
 
     // Generate JWT token
     const token = this.jwtService.sign(

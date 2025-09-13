@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common'
 import { LangTagService } from './langTag.service'
 import CreateLangTagDto from './dto/create-langTag.dto'
-import { PaginationDto } from './dto/pagination.dto'
+import { PaginationDto } from '../common/dto/pagination.dto'
 
 @Controller('lang_tag')
 export class LangTagController {

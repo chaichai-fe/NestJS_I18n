@@ -1,21 +1,21 @@
 import {
-  integer,
-  pgTable,
+  int,
+  mysqlTable,
   varchar,
   timestamp,
-  jsonb,
-} from 'drizzle-orm/pg-core'
+  json,
+} from 'drizzle-orm/mysql-core'
 
-export const businessTagTable = pgTable('business_tags', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+export const businessTagTable = mysqlTable('business_tags', {
+  id: int().primaryKey().autoincrement(),
   name: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 })
 
-export const langTagTable = pgTable('lang_tags', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+export const langTagTable = mysqlTable('lang_tags', {
+  id: int().primaryKey().autoincrement(),
   name: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -39,18 +39,18 @@ export type TranslationContent = {
   }
 }
 
-export const translationTable = pgTable('translation', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+export const translationTable = mysqlTable('translation', {
+  id: int().primaryKey().autoincrement(),
   name: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }).notNull(),
-  business_tag_id: integer()
+  business_tag_id: int()
     .notNull()
     .references(() => businessTagTable.id),
-  translations: jsonb('translations').$type<TranslationContent>().notNull(),
+  translations: json('translations').$type<TranslationContent>().notNull(),
 })
 
-export const userTable = pgTable('users', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+export const userTable = mysqlTable('users', {
+  id: int().primaryKey().autoincrement(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull(),
   password: varchar({ length: 255 }).notNull(),

@@ -3,18 +3,27 @@ import db from '../db'
 import { langTagTable } from '../db/schema'
 import type CreateLangTagDto from './dto/create-langTag.dto'
 import { eq, sql } from 'drizzle-orm'
-import { PaginationDto } from './dto/pagination.dto'
+import { PaginationDto } from '../common/dto/pagination.dto'
 
 @Injectable()
 export class LangTagService {
   async create(createLangTagDto: CreateLangTagDto) {
-    return await db.insert(langTagTable).values(createLangTagDto).returning()
+    await db.insert(langTagTable).values(createLangTagDto)
+
+    // MySQL doesn't support returning, so we need to query the inserted record
+    const [insertedRecord] = await db
+      .select()
+      .from(langTagTable)
+      .where(eq(langTagTable.name, createLangTagDto.name))
+      .limit(1)
+
+    return [insertedRecord]
   }
 
   async findAll(paginationDto: PaginationDto) {
-    // 兜底转换为数字
-    const page = Number(paginationDto.page)
-    const pageSize = Number(paginationDto.pageSize)
+    // 兜底转换为数字，使用默认值
+    const page = Number(paginationDto.page) || 1
+    const pageSize = Number(paginationDto.pageSize) || 10
     const offset = (page - 1) * pageSize
 
     const [data, total] = await Promise.all([
@@ -32,21 +41,28 @@ export class LangTagService {
   }
 
   async remove(id: number) {
-    return await db
-      .delete(langTagTable)
-      .where(eq(langTagTable.id, id))
-      .returning()
+    await db.delete(langTagTable).where(eq(langTagTable.id, id))
+
+    return { success: true }
   }
 
   async update(id: number, updateLangTagDto: CreateLangTagDto) {
-    return await db
+    await db
       .update(langTagTable)
       .set({
         ...updateLangTagDto,
         updatedAt: sql`NOW()`,
       })
       .where(eq(langTagTable.id, id))
-      .returning()
+
+    // MySQL doesn't support returning, so we need to query the updated record
+    const [updatedRecord] = await db
+      .select()
+      .from(langTagTable)
+      .where(eq(langTagTable.id, id))
+      .limit(1)
+
+    return [updatedRecord]
   }
 
   async findById(id: number) {

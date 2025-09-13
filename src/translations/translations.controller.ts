@@ -8,6 +8,7 @@ import {
   Put,
   Res,
   UseGuards,
+  Query,
 } from '@nestjs/common'
 import { TranslationsService } from './translations.service'
 import CreateTranslationDto from './dto/create-translation.dto'
@@ -15,14 +16,15 @@ import { Body } from '@nestjs/common'
 import { Response } from 'express'
 import { AuthGuard } from 'src/auth/auth.guard'
 import { ApiBearerAuth } from '@nestjs/swagger'
+import { PaginationDto } from '../common/dto/pagination.dto'
 
 @Controller('translations')
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}
 
   @Get()
-  async findAll() {
-    const result = await this.translationsService.findAll()
+  async findAll(@Query() paginationDto: PaginationDto) {
+    const result = await this.translationsService.findAll(paginationDto)
     return {
       statusCode: HttpStatus.OK,
       message: 'find all success',
